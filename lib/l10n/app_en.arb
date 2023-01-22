@@ -1,0 +1,9 @@
+{
+  "agenty_game_review": "AgentY game review",
+  "enter_game_code": "Enter game code",
+  "submit": "Submit",
+  "please_enter_the_game_code": "Please enter the game code",
+  "default_error": "Something went wrong. Try it later again.",
+  "no_game_found_error": "No game was found.",
+  "missing_query_parameter": "Wrong use of link."
+}
