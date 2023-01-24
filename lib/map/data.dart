@@ -83,14 +83,15 @@ class Data {
 
   static Future<Data?> fetchData(String gameId) async {
     //TODO set uri
-    final response = await http.get(Uri.parse('http://192.168.178.33:3000/$gameId'),
-        headers: {"Accept": "application/json"});
-
-    if (response.statusCode != 200) {
-      return null;
-    }
-
     try {
+      final response = await http.get(
+          Uri.parse('http://192.168.178.33:3000/$gameId'),
+          headers: {"Accept": "application/json"});
+
+      if (response.statusCode != 200) {
+        return null;
+      }
+
       return Data.fromJson(jsonDecode(response.body));
     } catch (e, s) {
       print('Error');
