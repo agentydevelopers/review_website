@@ -26,11 +26,13 @@ class GameMapPage extends StatefulWidget {
 class _GameMapPageState extends State<GameMapPage> {
   late AppLocalizations _l10n;
   final MapController _mapController = MapController();
+  final List<double> _timerMultiplySteps = const [0.5, 1, 1.5, 2, 4];
   Data? _data;
   Duration? _gameDuration;
   DateTime? _gameTime;
   bool _running = true, _oldRunningValue = false, _scrollChange = false;
   Timer? _timer;
+  int _timerMultiplyIndex = 1;
 
   @override
   void initState() {
@@ -78,6 +80,13 @@ class _GameMapPageState extends State<GameMapPage> {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             title: Text(_l10n.agenty_game_review),
+            leading: IconButton (
+              icon: Icon(Icons.home),
+              onPressed: () {
+                Navigator.pushNamed(
+                    context, '/');
+              },
+            ),
           ),
           body: Stack(
             children: [
@@ -135,34 +144,40 @@ class _GameMapPageState extends State<GameMapPage> {
               if (_data != null)
                 Column(
                   children: [
-                    Slider(
-                      value: _gameTime!
-                          .difference(_data!.startTime)
-                          .inMilliseconds
-                          .toDouble(),
-                      min: 0,
-                      divisions: _gameDuration!.inSeconds * 2,
-                      label: _gameTime!.toIso8601String(),
-                      max: _gameDuration!.inMilliseconds.toDouble(),
-                      onChangeStart: (value) {
-                        _oldRunningValue = _running;
-                        setState(() {
-                          _scrollChange = true;
-                          _running = false;
-                        });
-                      },
-                      onChanged: (double s) {
-                        setState(() {
-                          _gameTime = _data!.startTime
-                              .add(Duration(milliseconds: s.toInt()));
-                        });
-                      },
-                      onChangeEnd: (value) {
-                        setState(() {
-                          _scrollChange = false;
-                          _running = _oldRunningValue;
-                        });
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Slider(
+                          value: _gameTime!
+                              .difference(_data!.startTime)
+                              .inMilliseconds
+                              .toDouble(),
+                          min: 0,
+                          divisions: _gameDuration!.inSeconds * 2,
+                          label: _gameTime!.toIso8601String(),
+                          max: _gameDuration!.inMilliseconds.toDouble(),
+                          onChangeStart: (value) {
+                            _oldRunningValue = _running;
+                            setState(() {
+                              _scrollChange = true;
+                              _running = false;
+                            });
+                          },
+                          onChanged: (double s) {
+                            setState(() {
+                              _gameTime = _data!.startTime
+                                  .add(Duration(milliseconds: s.toInt()));
+                            });
+                          },
+                          onChangeEnd: (value) {
+                            setState(() {
+                              _scrollChange = false;
+                              _running = _oldRunningValue;
+                            });
+                          },
+                        ),
+                        Text(_gameTime!.toIso8601String())
+                      ],
                     ),
                     ItemListDisplay(items: _data!.items.setState(_gameTime!)),
                   ],
@@ -172,6 +187,26 @@ class _GameMapPageState extends State<GameMapPage> {
           floatingActionButton: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              FloatingActionButton(
+                heroTag: 'start',
+                onPressed: _data == null
+                    ? null
+                    : () {
+                        setState(() {
+                          _timerMultiplyIndex++;
+                          if (_timerMultiplyIndex >=
+                              _timerMultiplySteps.length) {
+                            _timerMultiplyIndex = 0;
+                          }
+                        });
+                      },
+                backgroundColor:
+                    _data == null || _scrollChange ? Colors.grey : Colors.blue,
+                child: Text('x${_timerMultiplySteps[_timerMultiplyIndex]}'),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               FloatingActionButton(
                 heroTag: 'start',
                 onPressed: _data == null
@@ -232,7 +267,9 @@ class _GameMapPageState extends State<GameMapPage> {
     _timer ??= Timer.periodic(const Duration(milliseconds: 30), (timer) {
       if (!mounted || !_running) return;
       setState(() {
-        _gameTime = _gameTime!.add(const Duration(milliseconds: 30));
+        _gameTime = _gameTime!.add(Duration(
+            milliseconds:
+                (30 * _timerMultiplySteps[_timerMultiplyIndex]).toInt()));
         if (!_gameTime!.isBefore(_data!.endTime)) {
           _gameTime = _data!.endTime;
           _running = false;
