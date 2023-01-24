@@ -133,7 +133,7 @@ class Items {
     ];
   }
 
-  factory Items.fromJson(List<Map<String, dynamic>> jsonItems) {
+  factory Items.fromJson(List<dynamic> jsonItems) {
     return Items(items: [
       for (Map<String, dynamic> jsonItem in jsonItems) Item.fromJson(jsonItem)
     ]);

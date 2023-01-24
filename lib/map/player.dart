@@ -90,15 +90,13 @@ class Player {
         DateTime.fromMillisecondsSinceEpoch(jsonPoints['dateTime']):
             LatLng(jsonPoints['position']['lat'], jsonPoints['position']['lng'])
     }, color: Color(int.parse(json['color'])), name: json['name']);
-    if (json.keys.contains('polyline')) {
-      player.polyline = json['polyline'] == 'true';
-    }
     if (json.keys.contains('player_type')) {
       player.playerType = json['player_type'] == 'agentAlways'
           ? PlayerTyp.agentAlways
           : (json['player_type'] == 'agent'
               ? PlayerTyp.agent
               : PlayerTyp.seeker);
+      player.polyline = player.playerType == PlayerTyp.agent;
     }
     return player;
   }
@@ -131,7 +129,7 @@ class Players {
     return [for (Player player in players) PolylineMarker(gameTime, player)];
   }
 
-  factory Players.fromJson(List<Map<String, dynamic>> jsonPlayers) {
+  factory Players.fromJson(List<dynamic> jsonPlayers) {
     Players players = Players(players: [
       for (Map<String, dynamic> jsonPlayer in jsonPlayers)
         Player.fromJson(jsonPlayer)

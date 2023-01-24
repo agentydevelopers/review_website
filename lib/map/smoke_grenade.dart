@@ -15,7 +15,7 @@ class SmokeGrenades {
         !gameTime.isBefore(smoke.startTime));
   }
 
-  factory SmokeGrenades.fromJson(List<Map<String, dynamic>> jsonSmokeGrenades) {
+  factory SmokeGrenades.fromJson(List<dynamic> jsonSmokeGrenades) {
     return SmokeGrenades(smokes: [
       for (Map<String, dynamic> jsonSmokeGrenade in jsonSmokeGrenades)
         SmokeGrenade.fromJson(jsonSmokeGrenade)

@@ -145,11 +145,11 @@ class _GameMapPageState extends State<GameMapPage> {
                       label: _gameTime!.toIso8601String(),
                       max: _gameDuration!.inMilliseconds.toDouble(),
                       onChangeStart: (value) {
+                        _oldRunningValue = _running;
                         setState(() {
                           _scrollChange = true;
                           _running = false;
                         });
-                        _oldRunningValue = _running;
                       },
                       onChanged: (double s) {
                         setState(() {

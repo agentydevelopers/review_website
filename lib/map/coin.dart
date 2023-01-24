@@ -39,7 +39,7 @@ class Coins {
     ];
   }
 
-  factory Coins.fromJson(List<Map<String, dynamic>> jsonCoins) {
+  factory Coins.fromJson(List<dynamic> jsonCoins) {
     Coins coins = Coins(coins: [
       for (Map<String, dynamic> jsonCoin in jsonCoins) Coin.fromJson(jsonCoin)
     ]);
