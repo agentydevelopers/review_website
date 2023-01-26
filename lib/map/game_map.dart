@@ -188,7 +188,7 @@ class _GameMapPageState extends State<GameMapPage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               FloatingActionButton(
-                heroTag: 'start',
+                heroTag: 'timeMultiply',
                 onPressed: _data == null
                     ? null
                     : () {

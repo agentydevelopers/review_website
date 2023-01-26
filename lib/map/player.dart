@@ -96,7 +96,10 @@ class Player {
           : (json['player_type'] == 'agent'
               ? PlayerTyp.agent
               : PlayerTyp.seeker);
-      player.polyline = player.playerType == PlayerTyp.agent;
+      player.polyline = player.playerType != PlayerTyp.agent;
+      if(player.playerType==PlayerTyp.agent){
+        player.name+=' (game)';
+      }
     }
     return player;
   }
