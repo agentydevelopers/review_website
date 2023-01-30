@@ -30,7 +30,10 @@ class _GameMapPageState extends State<GameMapPage> {
   Data? _data;
   Duration? _gameDuration;
   DateTime? _gameTime;
-  bool _running = true, _oldRunningValue = false, _scrollChange = false;
+  bool _running = true,
+      _oldRunningValue = false,
+      _scrollChange = false,
+      _moving = false;
   Timer? _timer;
   int _timerMultiplyIndex = 1;
 
@@ -80,11 +83,10 @@ class _GameMapPageState extends State<GameMapPage> {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             title: Text(_l10n.agenty_game_review),
-            leading: IconButton (
+            leading: IconButton(
               icon: Icon(Icons.home),
               onPressed: () {
-                Navigator.pushNamed(
-                    context, '/');
+                Navigator.pushNamed(context, '/');
               },
             ),
           ),
@@ -97,8 +99,14 @@ class _GameMapPageState extends State<GameMapPage> {
                       source: 'OpenStreetMap contributors',
                       onSourceTapped: null)
                 ],
-                options:
-                    MapOptions(center: LatLng(50.097695, 8.670508), zoom: 17),
+                options: MapOptions(
+                  center: LatLng(50.097695, 8.670508),
+                  zoom: 17,
+                  maxBounds: LatLngBounds(
+                    LatLng(-90, -180.0),
+                    LatLng(90.0, 180.0),
+                  ),
+                ),
                 children: [
                   TileLayer(
                     maxNativeZoom: 18.0,
@@ -226,6 +234,24 @@ class _GameMapPageState extends State<GameMapPage> {
                 child: _running
                     ? const Icon(Icons.pause)
                     : const Icon(Icons.play_arrow),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              FloatingActionButton(
+                heroTag: 'center',
+                onPressed: _data == null
+                    ? null
+                    : () {
+                        _mapController.fitBounds(
+                            _calculateLatLngBoundsWithRadius(
+                                _data!.gameArenaCenter, _data!.gameArenaRadius),
+                            options: const FitBoundsOptions(maxZoom: 19.5));
+                      },
+                backgroundColor: _data == null || _gameTime == _data!.startTime
+                    ? Colors.grey
+                    : Colors.blue,
+                child: const Icon(Icons.my_location),
               ),
               const SizedBox(
                 height: 10,
