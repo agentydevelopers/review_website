@@ -13,7 +13,7 @@ class Coin {
     return Coin(
         startTime: DateTime.fromMillisecondsSinceEpoch(json['startTime']),
         endTime: DateTime.fromMillisecondsSinceEpoch(json['endTime']),
-        point: LatLng(json['position']['lat'], json['position']['lng']));
+        point: LatLng(json['lat'], json['lng']));
   }
 }
 
@@ -48,5 +48,5 @@ class Coins {
 }
 
 /*
-[{"startTime":{dateTimeAsMilliSeconds}, "endTime":{dateTimeAsMilliSeconds}, "position":{"lat":45, "lng":34}]
+[{"startTime":{dateTimeAsMilliSeconds}, "endTime":{dateTimeAsMilliSeconds}, "lat":45, "lng":34]
  */

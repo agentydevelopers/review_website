@@ -38,7 +38,7 @@ class Data {
         startTime: DateTime.fromMillisecondsSinceEpoch(json['startTime']),
         endTime: DateTime.fromMillisecondsSinceEpoch(json['endTime']),
         gameArenaCenter:
-            LatLng(json['arena_center']['lat'], json['arena_center']['lng']),
+            LatLng(json['arena_center_lat'], json['arena_center_lng']),
         gameArenaRadius: json['arena_radius']);
   }
 
@@ -104,13 +104,14 @@ class Data {
 
 /*
 {
-"players":[{"points":[{"dateTime":{dateTimeAsMilliSeconds}, "position":{"lat":54, "lng":54}, "color":{hex}, "name":"Test"}], ?"polyline":true, ?"player_type":{seeker, agent, agentAlways}}],
-"coins":[{"startTime":{dateTimeAsMilliSeconds}, "endTime":{dateTimeAsMilliSeconds}, "position":{"lat":45, "lng":34}],
+"players":[{"points":[{"dateTime":{dateTimeAsMilliSeconds}, "lat":54, "lng":54, "color":{hex}, "name":"Test"}], ?"polyline":true, ?"player_type":{seeker, agent, agentAlways}}],
+"coins":[{"startTime":{dateTimeAsMilliSeconds}, "endTime":{dateTimeAsMilliSeconds}, "lat":45, "lng":34],
 "items": [{"startTime":{dateTimeAsMilliSeconds}, "endTime":{dateTimeAsMilliSeconds}, "id"={itemId}}],
-"smokeGrenades":[{"startTime":{dateTimeAsMilliSeconds},"endTime":{dateTimeAsMilliSeconds}, "position":{"lat":5, "lng":45}, "radius":45}],
+"smokeGrenades":[{"startTime":{dateTimeAsMilliSeconds},"endTime":{dateTimeAsMilliSeconds}, "lat":5, "lng":45, "radius":45}],
 "startTime":{dateTimeAsMilliSeconds},
 "endTime":{dateTimeAsMilliSeconds},
-"arena_center":{"lat":54, "lng":54},
+"arena_center_lat":54,
+"arena_center_lng":54,
 "arena_radius":{radius}
 }
  */

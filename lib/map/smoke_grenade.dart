@@ -43,7 +43,7 @@ class SmokeGrenade {
     return SmokeGrenade(
         startTime: DateTime.fromMillisecondsSinceEpoch(json['startTime']),
         endTime: DateTime.fromMillisecondsSinceEpoch(json['endTime']),
-        point: LatLng(json['position']['lat'], json['position']['lng']),
+        point: LatLng(json['lat'], json['lng']),
         radius: json['radius']);
   }
 }
@@ -89,5 +89,5 @@ class SmokeGrenadeLayer extends StatelessWidget {
 }
 
 /*
-[{"startTime":{dateTimeAsMilliSeconds},"endTime":{dateTimeAsMilliSeconds}, "position":{"lat":5, "lng":45}, "radius":45}]
+[{"startTime":{dateTimeAsMilliSeconds},"endTime":{dateTimeAsMilliSeconds}, "lat":5, "lng":45, "radius":45}]
  */

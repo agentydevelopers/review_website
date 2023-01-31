@@ -88,7 +88,7 @@ class Player {
     Player player = Player(points: {
       for (Map<String, dynamic> jsonPoints in json['points'])
         DateTime.fromMillisecondsSinceEpoch(jsonPoints['dateTime']):
-            LatLng(jsonPoints['position']['lat'], jsonPoints['position']['lng'])
+            LatLng(jsonPoints['lat'], jsonPoints['lng'])
     }, color: Color(int.parse(json['color'])), name: json['name']);
     if (json.keys.contains('player_type')) {
       player.playerType = json['player_type'] == 'agentAlways'
@@ -143,6 +143,6 @@ class Players {
 
 /*
 [{
-"points":[{"dateTime":{dateTimeAsMilliSeconds}, "position":{"lat":54, "lng":54}, "color":{hex}, "name":Test}], ?"polyline":true, ?"player_type":{seeker, agent, agentAlways}
+"points":[{"dateTime":{dateTimeAsMilliSeconds}, "lat":54, "lng":54, "color":{hex}, "name":Test}], ?"polyline":true, ?"player_type":{seeker, agent, agentAlways}
 }]
  */
