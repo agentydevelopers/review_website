@@ -5,5 +5,12 @@
   "please_enter_the_game_code": "Please enter the game code",
   "default_error": "Something went wrong. Try it later again.",
   "no_game_found_error": "No game was found.",
-  "missing_query_parameter": "Wrong use of link."
+  "missing_query_parameter": "Wrong use of link.",
+  "theme": "theme",
+  "refresh": "refresh",
+  "time_multiply": "time multiply",
+  "pause": "pause",
+  "resume": "resume",
+  "center": "center",
+  "share": "share"
 }

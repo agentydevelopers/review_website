@@ -5,6 +5,13 @@
   "please_enter_the_game_code": "Bitte gebe den Spielcode ein",
   "default_error": "Etwas ist schief gelaufen. Probiere es später nochmal.",
   "no_game_found_error": "Kein Spiel gefunden.",
-  "missing_query_parameter": "Falsche Benutzung des Links"
+  "missing_query_parameter": "Falsche Benutzung des Links",
+  "theme": "Theme",
+  "refresh": "Neuladen",
+  "time_multiply": "Zeit-Multiplizierer",
+  "pause": "Pause",
+  "resume": "Weiter",
+  "center": "Zentrieren",
+  "share": "Teilen"
 
 }

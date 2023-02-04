@@ -86,7 +86,7 @@ class Data {
     try {
       final response = await http.get(
           Uri.parse('http://192.168.178.33:3000/$gameId'),
-          headers: {"Accept": "application/json"});
+          headers: {"Accept": "application/json"}).timeout(const Duration(seconds: 30));
 
       if (response.statusCode != 200) {
         return null;

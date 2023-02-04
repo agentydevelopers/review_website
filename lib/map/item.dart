@@ -112,7 +112,7 @@ class Items {
 
   Items({this.items = const []});
 
-  List<Widget> setState(DateTime gameTime) {
+  List<Widget> setState(DateTime gameTime, BuildContext context) {
     return [
       for (Item item in items)
         if (gameTime.isBefore(item.endTime) &&
@@ -127,7 +127,9 @@ class Items {
                   child: LinearProgressIndicator(
                       value: item.endTime.difference(gameTime).inMilliseconds /
                           item._durationInMillisecond,
-                      valueColor: const AlwaysStoppedAnimation(Colors.blue)))
+                      backgroundColor: Colors.white,
+                      valueColor: AlwaysStoppedAnimation(
+                          Theme.of(context).backgroundColor)))
             ],
           )
     ];

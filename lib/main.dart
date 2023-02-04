@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:website/lobby.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -8,33 +9,67 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  static const String themeKey = 'THEME';
+
+  const MyApp({Key? key}) : super(key: key);
 
   static const Map<String, Locale> _supportedLocales = {
     'English': Locale('en', ''),
     'Deutsch': Locale('de', ''),
   };
 
+  ///Convert theme possibilities to theme mode
+  static ThemeMode convertThemePossibilityToThemeMode(
+      ThemePossibilities theme) {
+    if (theme == ThemePossibilities.light) {
+      return ThemeMode.light;
+    } else {
+      return ThemeMode.dark;
+    }
+  }
+
+  static void update(BuildContext context) =>
+      context.findAncestorStateOfType<_MyAppState>()?._update();
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  void _update() => setState(() {});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AgentY',
-      supportedLocales: MyApp._supportedLocales.values,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      localeResolutionCallback: (locale, supportedLocales) {
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale!.languageCode) {
-            return supportedLocale;
-          }
-        }
-        return supportedLocales.first;
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      onGenerateRoute: RouteGenerator._generateRoute,
-    );
+    return FutureBuilder(
+        future: SharedPreferences.getInstance(),
+        builder: (context, snapshot) {
+          int? theme = snapshot.data?.getInt(MyApp.themeKey);
+          return MaterialApp(
+            title: 'AgentY',
+            supportedLocales: MyApp._supportedLocales.values,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            localeResolutionCallback: (locale, supportedLocales) {
+              for (var supportedLocale in supportedLocales) {
+                if (supportedLocale.languageCode == locale!.languageCode) {
+                  return supportedLocale;
+                }
+              }
+              return supportedLocales.first;
+            },
+            themeMode: theme == null
+                ? null
+                : MyApp.convertThemePossibilityToThemeMode(
+                    ThemePossibilities.values[theme]),
+            theme: ThemeData(
+                brightness: Brightness.light, backgroundColor: const Color.fromARGB(
+                249, 9, 143, 239)),
+            darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                backgroundColor: const Color.fromARGB(255, 0, 15, 107)),
+            onGenerateRoute: RouteGenerator._generateRoute,
+          );
+        });
   }
 }
 
@@ -70,10 +105,11 @@ class RouteGenerator {
             return const LobbyPage(
               lobbyErrors: LobbyErrors.defaultError,
             );
-            break;
         }
       },
       settings: settings,
     );
   }
 }
+
+enum ThemePossibilities { light, dark }
