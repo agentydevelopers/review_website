@@ -11,8 +11,8 @@ class Coin {
 
   factory Coin.fromJson(Map<String, dynamic> json) {
     return Coin(
-        startTime: DateTime.fromMillisecondsSinceEpoch(json['startTime']),
-        endTime: DateTime.fromMillisecondsSinceEpoch(json['endTime']),
+        startTime: DateTime.fromMillisecondsSinceEpoch(int.parse(json['start_time'])),
+        endTime: DateTime.fromMillisecondsSinceEpoch(int.parse(json['end_time'])),
         point: LatLng(json['lat'], json['lng']));
   }
 }

@@ -102,8 +102,8 @@ class Item {
   }
 
   factory Item.fromJson(Map<String, dynamic> json) {
-    return Item(DateTime.fromMillisecondsSinceEpoch(json['startTime']),
-        DateTime.fromMillisecondsSinceEpoch(json['endTime']), json['id']);
+    return Item(DateTime.fromMillisecondsSinceEpoch(json['start_time']),
+        DateTime.fromMillisecondsSinceEpoch(json['end_time']), json['id']);
   }
 }
 

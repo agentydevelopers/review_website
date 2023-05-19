@@ -41,8 +41,8 @@ class SmokeGrenade {
 
   factory SmokeGrenade.fromJson(Map<String, dynamic> json) {
     return SmokeGrenade(
-        startTime: DateTime.fromMillisecondsSinceEpoch(json['startTime']),
-        endTime: DateTime.fromMillisecondsSinceEpoch(json['endTime']),
+        startTime: DateTime.fromMillisecondsSinceEpoch(json['start_time']),
+        endTime: DateTime.fromMillisecondsSinceEpoch(json['end_time']),
         point: LatLng(json['lat'], json['lng']),
         radius: json['radius']);
   }

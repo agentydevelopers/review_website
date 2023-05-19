@@ -111,7 +111,7 @@ class _LobbyPageState extends State<LobbyPage> {
                           controller: _gameCodeController,
                           focusNode: _focusNode,
                           autofocus: true,
-                          maxLength: 10,
+                          maxLength: 36,
                           cursorColor: Theme
                               .of(context)
                               .backgroundColor,
@@ -142,7 +142,7 @@ class _LobbyPageState extends State<LobbyPage> {
                           validator: (String? value) {
                             if (value == null ||
                                 value.isEmpty ||
-                                value.length != 10) {
+                                value.length != 36) {
                               return _l10n.please_enter_the_game_code;
                             }
                             return null;

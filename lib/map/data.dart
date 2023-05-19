@@ -34,9 +34,9 @@ class Data {
         players: Players.fromJson(json['players']),
         coins: Coins.fromJson(json['coins']),
         items: Items.fromJson(json['items']),
-        smokeGrenades: SmokeGrenades.fromJson(json['smokeGrenades']),
-        startTime: DateTime.fromMillisecondsSinceEpoch(json['startTime']),
-        endTime: DateTime.fromMillisecondsSinceEpoch(json['endTime']),
+        smokeGrenades: SmokeGrenades.fromJson(json['smoke_grenades']),
+        startTime: DateTime.fromMillisecondsSinceEpoch(int.parse(json['start_time'])),
+        endTime: DateTime.fromMillisecondsSinceEpoch(int.parse(json['end_time'])),
         gameArenaCenter:
             LatLng(json['arena_center_lat'], json['arena_center_lng']),
         gameArenaRadius: json['arena_radius']);
@@ -85,13 +85,13 @@ class Data {
     //TODO set uri
     try {
       final response = await http.get(
-          Uri.parse('http://192.168.178.33:3000/$gameId'),
+          Uri.parse('http://192.168.178.34:3000/$gameId'),
           headers: {"Accept": "application/json"}).timeout(const Duration(seconds: 30));
-
+      print(response.statusCode);
       if (response.statusCode != 200) {
         return null;
       }
-
+      print(jsonDecode(response.body));
       return Data.fromJson(jsonDecode(response.body));
     } catch (e, s) {
       print('Error');

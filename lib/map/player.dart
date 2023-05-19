@@ -87,7 +87,7 @@ class Player {
   factory Player.fromJson(Map<String, dynamic> json) {
     Player player = Player(points: {
       for (Map<String, dynamic> jsonPoints in json['points'])
-        DateTime.fromMillisecondsSinceEpoch(jsonPoints['dateTime']):
+        DateTime.fromMillisecondsSinceEpoch(int.parse(jsonPoints['date_time'])):
             LatLng(jsonPoints['lat'], jsonPoints['lng'])
     }, color: Color(int.parse(json['color'])), name: json['name']);
     if (json.keys.contains('player_type')) {
