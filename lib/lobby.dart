@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'main.dart';
@@ -20,6 +21,11 @@ class _LobbyPageState extends State<LobbyPage> {
   final TextEditingController _gameCodeController = TextEditingController();
   late FocusNode _focusNode;
   late AppLocalizations _l10n;
+  MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
+      mask: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+      filter: { "x": RegExp(r'[0-9a-z]') },
+      type: MaskAutoCompletionType.lazy
+  );
 
   @override
   void initState() {
@@ -55,12 +61,12 @@ class _LobbyPageState extends State<LobbyPage> {
               ScaffoldMessenger.of(context).removeCurrentSnackBar();
             },
           ),
-          content: Text(text, style: TextStyle(color: Colors.white)),
+          content: Text(text, style: const TextStyle(color: Colors.white)),
           duration: const Duration(minutes: 30),
           behavior: SnackBarBehavior.fixed,
           backgroundColor: Theme
               .of(context)
-              .backgroundColor,
+              .colorScheme.background,
         ));
       });
     } else {
@@ -106,7 +112,7 @@ class _LobbyPageState extends State<LobbyPage> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        width: 200,
+                        width: 400,
                         child: TextFormField(
                           controller: _gameCodeController,
                           focusNode: _focusNode,
@@ -114,14 +120,14 @@ class _LobbyPageState extends State<LobbyPage> {
                           maxLength: 36,
                           cursorColor: Theme
                               .of(context)
-                              .backgroundColor,
+                              .colorScheme.background,
                           textInputAction: TextInputAction.search,
                           decoration: InputDecoration(
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: Theme
                                     .of(context)
-                                    .backgroundColor,
+                                    .colorScheme.background,
                               ),
                             ),
                             hintText: _l10n.enter_game_code,
@@ -134,10 +140,11 @@ class _LobbyPageState extends State<LobbyPage> {
                                 Icons.clear,
                                 color: _focusNode.hasFocus ? Theme
                                     .of(context)
-                                    .backgroundColor : null,
+                                    .colorScheme.background : null,
                               ),
                             ),
                           ),
+                          inputFormatters: [maskFormatter],
                           onFieldSubmitted: (value) => onSubmit(),
                           validator: (String? value) {
                             if (value == null ||
@@ -155,7 +162,7 @@ class _LobbyPageState extends State<LobbyPage> {
                             backgroundColor: MaterialStateProperty.all(
                                 Theme
                                     .of(context)
-                                    .backgroundColor)),
+                                    .colorScheme.background)),
                         onPressed: onSubmit,
                         child: Text(_l10n.submit),
                       ),
