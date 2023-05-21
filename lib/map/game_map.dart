@@ -87,7 +87,7 @@ class _GameMapPageState extends State<GameMapPage> {
       children: [
         Scaffold(
           appBar: AppBar(
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
             automaticallyImplyLeading: false,
             title: Text(_l10n.agenty_game_review),
             leading: IconButton(
@@ -190,10 +190,9 @@ class _GameMapPageState extends State<GameMapPage> {
             children: [
               FlutterMap(
                 mapController: _mapController,
-                nonRotatedChildren: [
-                  AttributionWidget.defaultWidget(
-                      source: 'OpenStreetMap contributors',
-                      onSourceTapped: null)
+                nonRotatedChildren: const [
+                  SimpleAttributionWidget(
+                      source: Text('OpenStreetMap contributors'))
                 ],
                 options: MapOptions(
                   onMapEvent: (event) {
@@ -210,6 +209,7 @@ class _GameMapPageState extends State<GameMapPage> {
                   },
                   center: LatLng(50.097695, 8.670508),
                   zoom: 17,
+                  maxZoom: 18.4,
                   maxBounds: LatLngBounds(
                     LatLng(-90, -180.0),
                     LatLng(90.0, 180.0),
@@ -221,15 +221,15 @@ class _GameMapPageState extends State<GameMapPage> {
                         Theme.of(context).brightness == Brightness.dark
                             ? Colors.black
                             : Colors.white,
-                    maxNativeZoom: 18.0,
+                    maxNativeZoom: 17,
                     urlTemplate:
                         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'agenty.website',
                     subdomains: const ['a', 'b', 'c'],
-                    tilesContainerBuilder:
-                        Theme.of(context).brightness == Brightness.dark
-                            ? darkModeTilesContainerBuilder
-                            : null,
+                    tileBuilder: Theme.of(context).brightness == Brightness.dark
+                        ? (context, widget, tile) =>
+                            darkModeTilesContainerBuilder(context, widget)
+                        : null,
                   ),
                   if (_data != null)
                     SmokeGrenadeLayer(
@@ -256,7 +256,7 @@ class _GameMapPageState extends State<GameMapPage> {
                   if (_data != null)
                     OuterCircleLayer(
                         marker: OuterCircleMarker(
-                            borderColor: Theme.of(context).backgroundColor,
+                            borderColor: Theme.of(context).colorScheme.background,
                             isMobile: !kIsWeb,
                             point: _data!.gameArenaCenter,
                             radius: _data!.gameArenaRadius))
@@ -269,7 +269,7 @@ class _GameMapPageState extends State<GameMapPage> {
                     Padding(
                       padding: const EdgeInsets.only(right: 75, bottom: 10),
                       child: Slider(
-                        activeColor: Theme.of(context).backgroundColor,
+                        activeColor: Theme.of(context).colorScheme.background,
                         value: _gameTime!
                             .difference(_data!.startTime)
                             .inMilliseconds
@@ -311,7 +311,7 @@ class _GameMapPageState extends State<GameMapPage> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme.of(context).colorScheme.background,
                           borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(15.0),
                               bottomRight: Radius.circular(15.0))),
@@ -349,7 +349,7 @@ class _GameMapPageState extends State<GameMapPage> {
                             options: const FitBoundsOptions(maxZoom: 19.5));
                       },
                 backgroundColor:
-                    _moving ? Colors.grey : Theme.of(context).backgroundColor,
+                    _moving ? Colors.grey : Theme.of(context).colorScheme.background,
                 child: const Icon(Icons.my_location, color: Colors.white),
               ),
             ],

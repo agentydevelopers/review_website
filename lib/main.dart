@@ -62,11 +62,13 @@ class _MyAppState extends State<MyApp> {
                 : MyApp.convertThemePossibilityToThemeMode(
                     ThemePossibilities.values[theme]),
             theme: ThemeData(
-                brightness: Brightness.light, backgroundColor: const Color.fromARGB(
-                249, 9, 143, 239)),
+                brightness: Brightness.light,
+                colorScheme: const ColorScheme.light(
+                    background: Color.fromARGB(249, 9, 143, 239))),
             darkTheme: ThemeData(
                 brightness: Brightness.dark,
-                backgroundColor: const Color.fromARGB(255, 0, 15, 107)),
+                colorScheme: const ColorScheme.dark(
+                    background: Color.fromARGB(255, 0, 15, 107))),
             onGenerateRoute: RouteGenerator._generateRoute,
           );
         });
